@@ -1,6 +1,6 @@
 import User from "../models/user.model.js";
 import AppError from "../utils/appError.js"
-import cookie from 'cookie-parser'
+
 
 const cookieOptions = {
     secure: true,
