@@ -1,5 +1,12 @@
 import User from "../models/user.model.js";
 import AppError from "../utils/appError.js"
+import cookie from 'cookie-parser'
+
+const cookieOptions = {
+    secure: true,
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+    httpOnly:true
+}
 
 //************Register method to register** 
 const register = async (req,res) => {
@@ -42,8 +49,29 @@ const register = async (req,res) => {
 }
 
 //***Login method to login the website***** 
-const login = () => {
-    
+const login = async (req,res) => {
+    const { email, password } = req.body;
+    if (!email || !password) {
+        return next(new AppError('All fields are required', 400));
+    }
+
+    const user = await User.findOne({
+        email
+    }).select('+password');
+
+    if (!user || !user.comparePassword(password)) { //TODO: comparePassword
+        return next(new AppError('Email or password does not match', 400));
+    }
+
+    const token = await user.generateJWTToken();
+
+    user.password = undefined;
+    res.cookie('token', token, cookieOptions);
+    res.status(200).json({
+        success: true,
+        message: 'User logged in successfully',
+        user
+    });
 }
 
 //**logout method to logout the website**
