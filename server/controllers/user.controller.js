@@ -76,12 +76,30 @@ const login = async (req,res) => {
 
 //**logout method to logout the website**
 const logout = () => {
-    
+    res.cookie('token', null, {
+        secure: true, 
+        maxAge: 0,
+        httpOnly: true
+    });
+
+    res.status(200).json({
+        success: true,
+        message: 'User logged out successfully'
+    });
+
 }
 
-//profime method to get the profile details
-const getProfile = () => {
-    
+//profile method to get the profile details
+const getProfile = async (req,res) => {
+    const user = await User.findById(req.user.id);
+
+    res.status(200).json({
+        success: true, 
+        message: 'User details',
+        user
+    });
+
+
 }
 
 export  {
