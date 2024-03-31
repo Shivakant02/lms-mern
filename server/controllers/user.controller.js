@@ -1,5 +1,7 @@
 import User from "../models/user.model.js";
 import AppError from "../utils/appError.js"
+import cloudinary from 'cloudinary'
+import fs from 'fs/promises'
 
 
 const cookieOptions = {
@@ -9,7 +11,7 @@ const cookieOptions = {
 }
 
 //************Register method to register** 
-const register = async (req,res) => {
+const register = async (req,res,next) => {
     const { fullName, email, password } = req.body
     
     if (!fullName || !email || !password) {
@@ -31,15 +33,36 @@ const register = async (req,res) => {
         }
     });
 
-    if (!User) {
-        return next('User registration failed , try again', 400);
+    //TODO: upload user picture
+    console.log('file details->',JSON.stringify(req.file));
+    if (req.body) {
+       try {
+           const result = await cloudinary.v2.uploader.upload(req.file.path, {
+               folder: 'lms',
+               width: 250,
+               height: 250,
+               gravity: 'faces',
+               crop:'fill',
+           });
+
+           if (result) {
+               user.avatar.Public_id = result.public_id;
+               user.avatar.secure_url = result.secure_url;
+
+               fs.rm(`upload/${req.file.filename}`);
+           }
+           
+       } catch (error) {
+        return next(new AppError(error.message||'file not uploaded, please try again',500))
+       } 
     }
 
-    //TODO: upload user picture
-
     await user.save();
+
     //TODO:set jwt token cookie
+
     user.password = undefined;
+
     res.status(200).json({
         success: true,
         Message: 'User registered successfully',
@@ -49,7 +72,7 @@ const register = async (req,res) => {
 }
 
 //***Login method to login the website***** 
-const login = async (req,res) => {
+const login = async (req,res,next) => {
     const { email, password } = req.body;
     if (!email || !password) {
         return next(new AppError('All fields are required', 400));

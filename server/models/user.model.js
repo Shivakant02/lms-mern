@@ -24,8 +24,7 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: [true, 'Password is required'],
-        minLength: [8, 'Password must be at least 8 characters'],
-        maxLength: [15, 'Password must be at most 15 characters'],
+        maxLength: [150, 'Password must be at most 15 characters'],
         select: false,
     },
     role: {
@@ -57,7 +56,7 @@ const userSchema = new Schema({
     timestamps: true
 });
 
-userSchema.pre('save', async function () {
+userSchema.pre('save', async function (next) {
     if (!this.isModified('password')) {
         return next();
     }
