@@ -3,6 +3,9 @@ import AppError from "../utils/appError.js"
 import cloudinary from 'cloudinary'
 import fs from 'fs/promises'
 import sendEmail from "../utils/sendEmail.js";
+import asyncHandler from 'express-async-handler'
+import crypto from 'crypto'
+
 
 
 const cookieOptions = {
@@ -71,39 +74,49 @@ const register = async (req,res,next) => {
 
   
 
-    res.status(200).json({
+    res.status(201).json({
         success: true,
         Message: 'User registered successfully',
         user
         
-    })
+    });
 }
 
 //***Login method to login the website***** 
-const login = async (req,res,next) => {
-    const { email, password } = req.body;
-    if (!email || !password) {
-        return next(new AppError('All fields are required', 400));
-    }
+const login = asyncHandler( async (req,res,next) => {
+     const { email, password } = req.body;
 
-    const user = await User.findOne({
-        email
-    }).select('+password');
+  // Check if the data is there or not, if not throw error message
+  if (!email || !password) {
+    return next(new AppError('Email and Password are required', 400));
+  }
 
-    if (!user || !user.comparePassword(password)) { //TODO: comparePassword
-        return next(new AppError('Email or password does not match', 400));
-    }
+  // Finding the user with the sent email
+  const user = await User.findOne({ email }).select('+password');
 
-    const token = await user.generateJWTToken();
+  // If no user or sent password do not match then send generic response
+  if (!(user && (await user.comparePassword(password)))) {
+    return next(
+      new AppError('Email or Password do not match or user does not exist', 401)
+    );
+  }
 
-    user.password = undefined;
-    res.cookie('token', token, cookieOptions);
-    res.status(200).json({
-        success: true,
-        message: 'User logged in successfully',
-        user
-    });
-}
+  // Generating a JWT token
+  const token = await user.generateJWTToken();
+
+  // Setting the password to undefined so it does not get sent in the response
+  user.password = undefined;
+
+  // Setting the token in the cookie with name token along with cookieOptions
+  res.cookie('token', token, cookieOptions);
+
+  // If all good send the response to the frontend
+  res.status(200).json({
+    success: true,
+    message: 'User logged in successfully',
+    user,
+  });
+})
 
 //**logout method to logout the website**
 const logout = (req,res) => {
@@ -149,7 +162,7 @@ const forgotPassword = async (req,res,next ) => {
 
     const resetToken = await user.generatePasswordToken();
 
-    await uset.save();
+    await user.save();
 
     const resetPasswordUrl=`${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
     const subject='Reset Password';
@@ -163,7 +176,7 @@ const forgotPassword = async (req,res,next ) => {
             message: `Reset password token has been sent to ${email} successfully!`
         });
 
-        console.log(resetPassword);
+        console.log(resetPasswordUrl);
 
     } catch (error) {
         user.forgotPasswordExpiry = undefined;
@@ -177,8 +190,41 @@ const forgotPassword = async (req,res,next ) => {
 
     //reset password implimentation
 const resetPassword = async (req,res,next) => {
+    const { resetToken } = req.params;
+    const { password } = req.body;
+
+    const forgotPasswordToken = crypto
+        .createHash('sha256')
+        .update(resetToken)
+        .digest('hex');
     
+    const user = await User.findOne({
+        forgotPasswordToken,
+        forgotPasswordExpiry: { $gt: Date.now() },
+        
+    });
+
+    if (!user) {
+        return next(new AppError('Token is invalid or expire',400))
+    }
+
+    user.password = password;
+    user.forgotPasswordExpiry = undefined;
+    user.forgotPasswordToken = undefined;
+
+    await user.save();
+
+    res.status(200).json({
+        success: true,
+        message:'password changed successfully',
+    })
 }
+
+const changePassword = async (req,res,next) => {
+     
+}
+
+
 
 export  {
     register,
@@ -187,5 +233,6 @@ export  {
     getProfile,
     forgotPassword,
     resetPassword,
+    changePassword,
     
 }
