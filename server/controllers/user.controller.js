@@ -125,9 +125,19 @@ const getProfile = async (req,res) => {
 
 }
 
+const forgotPassword = async () => {
+    
+}
+const resetPassword = async () => {
+    
+}
+
 export  {
     register,
     login,
     logout,
     getProfile,
+    forgotPassword,
+    resetPassword,
+    
 }
