@@ -2,6 +2,7 @@ import User from "../models/user.model.js";
 import AppError from "../utils/appError.js"
 import cloudinary from 'cloudinary'
 import fs from 'fs/promises'
+import sendEmail from "../utils/sendEmail.js";
 
 
 const cookieOptions = {
@@ -49,7 +50,7 @@ const register = async (req,res,next) => {
                user.avatar.Public_id = result.public_id;
                user.avatar.secure_url = result.secure_url;
 
-               fs.rm(`upload/${req.file.filename}`);
+            //    fs.rm(`upload/${req.file.filename}`);
            }
            
        } catch (error) {
@@ -60,8 +61,15 @@ const register = async (req,res,next) => {
     await user.save();
 
     //TODO:set jwt token cookie
+    const token = await user.generateJWTToken();
 
-    user.password = undefined;
+  // Setting the password to undefined so it does not get sent in the response
+  user.password = undefined;
+
+  // Setting the token in the cookie with name token along with cookieOptions
+  res.cookie('token', token, cookieOptions);
+
+  
 
     res.status(200).json({
         success: true,
@@ -98,7 +106,7 @@ const login = async (req,res,next) => {
 }
 
 //**logout method to logout the website**
-const logout = () => {
+const logout = (req,res) => {
     res.cookie('token', null, {
         secure: true, 
         maxAge: 0,
@@ -125,10 +133,50 @@ const getProfile = async (req,res) => {
 
 }
 
-const forgotPassword = async () => {
+//Forget password implimentation
+const forgotPassword = async (req,res,next ) => {
+    const { email } = req.body;
+
+    if (!email) {
+        return next(new AppError('Email is required'),400)
+    }
+
+    const user =await User.findOne({ email });
+
+    if (!user) {
+        return next(new AppError('User does not exist'), 400);
+    }
+
+    const resetToken = await user.generatePasswordToken();
+
+    await uset.save();
+
+    const resetPasswordUrl=`${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
+    const subject='Reset Password';
+    const message = `You can reset password by clicking <a href=${resetPasswordUrl} target="_blank">Reset your pasword</a>\n If the above link does not work for some reason copy paste this link in new tab n${resetPassword}.\nIf you have not requested kindly ignore.`;
     
+    try {
+        await sendEmail(email, subject, message);
+
+        res.status(200).json({
+            success: true,
+            message: `Reset password token has been sent to ${email} successfully!`
+        });
+
+        console.log(resetPassword);
+
+    } catch (error) {
+        user.forgotPasswordExpiry = undefined;
+        user.forgotPasswordToken = undefined;
+        await user.save();
+
+        return next(new AppError(error.message||`something went wrong`, 500));
+    }
+
 }
-const resetPassword = async () => {
+
+    //reset password implimentation
+const resetPassword = async (req,res,next) => {
     
 }
 
