@@ -1,14 +1,13 @@
-import { useEffect } from "react"
-import toast from "react-hot-toast"
 
-export default function App() {
-  useEffect(
-    () => {
-    toast.success('hello')
-  })
+
+
+ function App() {
+  
   return (
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
+    <>
+    <h1 className=" text-3xl font-bold underline text-white">Hello</h1>
+    </>
   )
 }
+
+export default App;
