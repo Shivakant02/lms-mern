@@ -1,21 +1,33 @@
-import { Model, Schema } from "mongoose";
+import { model, Schema } from "mongoose";
 
 const courseSchema = new Schema({
     title: {
-        type:String
+        type: String,
+        required: [true,'Title is required'],
+        minLength:[8,'Title must be atleast 8 character'],
+        maxLength: [255, 'Title must be less than 255 character'],
+        trim:true,
     },
     description: {
-        type:String
+        type: String,
+        required: [true,'Description is required'],
+        minLength:[8,'Description must be atleast 8 character'],
+        maxLength: [500, 'Title must be less than 500 character'],
+        trim:true,
     },
     catagory: {
-        type:String,
+        type: String,
+        required: true,
+        
     },
     thumbnail: {
         public_id: {
-            type:String
+            type: String,
+            required:true
         },
         secure_url: {
-            type:String
+            type: String,
+             required:true
         }
     },
     lectures: [{
@@ -23,22 +35,29 @@ const courseSchema = new Schema({
         description: String,
         lecture: {
              public_id: {
-            type:String
+                type: String,
+                  required:true
         },
         secure_url: {
-            type:String
+            type: String,
+             required:true
         }
             
         }
     }],
     numberOfLectures: {
-        type: String,
+        type: Number,
+        default:0,
         
+    },
+    createdBy: {
+        type: String,
+        required:true,
     }
 }, {
     timestamps:true
 })
 
-const Course = new Model('Course', courseSchema);
+const Course = model('Course', courseSchema);
 
 export default Course;
