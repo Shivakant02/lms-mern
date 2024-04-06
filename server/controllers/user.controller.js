@@ -3,7 +3,7 @@ import AppError from "../utils/appError.js"
 import cloudinary from 'cloudinary'
 import fs from 'fs/promises'
 import sendEmail from "../utils/sendEmail.js";
-import asyncHandler from 'express-async-handler'
+// import asyncHandler from 'express-async-handler'
 import crypto from 'crypto'
 
 
@@ -83,7 +83,7 @@ const register = async (req,res,next) => {
 }
 
 //***Login method to login the website***** 
-const login = asyncHandler( async (req,res,next) => {
+const login =  async (req,res,next) => {
      const { email, password } = req.body;
 
   // Check if the data is there or not, if not throw error message
@@ -116,7 +116,7 @@ const login = asyncHandler( async (req,res,next) => {
     message: 'User logged in successfully',
     user,
   });
-})
+}
 
 //**logout method to logout the website**
 const logout = (req,res) => {
