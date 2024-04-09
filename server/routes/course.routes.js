@@ -10,13 +10,17 @@ router
     .route('/')
     .get(getAllCourses)
     .post(
+        isLoggedIn,
         upload.single('thumbnail'),
         createCourse
     );
 router
     .route('/:id')
     .get(isLoggedIn, getLecturesByCourseId)
-    .put(updateCourse)
-    .delete(deleteCourse);
+    .put(
+        isLoggedIn,
+        updateCourse)
+    .delete(isLoggedIn,
+        deleteCourse);
 
 export default router;

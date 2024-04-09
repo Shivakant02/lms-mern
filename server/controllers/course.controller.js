@@ -2,6 +2,7 @@ import cludinary from 'cloudinary'
 import Course from "../models/course.model.js"
 import AppError from "../utils/appError.js"
 import fs from 'fs/promises'
+import { availableParallelism } from 'os'
 
 
 export const getAllCourses =async (req, res, next) => {
@@ -88,7 +89,21 @@ export const createCourse = async(req, res, next) => {
 
 
 export const deleteCourse = async(req, res, next) => {
-    
+    try {
+        const { id } = req.params;
+          
+        const course = await Course.findById(id);
+        if (!course) {
+            return next(new AppError('course does not exists', 500));
+        }
+        await Course.findByIdAndDelete(id);
+        res.status(200).json({
+            success: true,
+            message:'course deleted successfully'
+        })
+    } catch (error) {
+        return next(new AppError(error.message, 500));
+    }
 }
 
 
