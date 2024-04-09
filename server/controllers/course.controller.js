@@ -93,5 +93,26 @@ export const deleteCourse = async(req, res, next) => {
 
 
 export const updateCourse = async(req, res, next) => {
-    
+    const { id } = req.params;
+
+    const course = await Course.findByIdAndUpdate(
+        id,
+        
+        {
+            $set:req.body
+        },
+        {
+            runValidators:true
+        }
+    )
+
+    if (!course) {
+        return next(new AppError('course does not exist', 400));
+    }
+
+    res.status(200).json({
+        success: true,
+        message: 'course updated successfully',
+        course
+    })
 }
