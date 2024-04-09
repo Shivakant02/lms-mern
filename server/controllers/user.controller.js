@@ -53,7 +53,7 @@ const register = async (req,res,next) => {
                user.avatar.Public_id = result.public_id;
                user.avatar.secure_url = result.secure_url;
 
-               fs.rm(`upload/${req.file.filename}`);
+               fs.rm(`uploads/${req.file.filename}`);
            }
            
        } catch (error) {
