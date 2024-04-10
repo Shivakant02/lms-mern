@@ -29,7 +29,8 @@ router
         isLoggedIn,
         authorizedRoles('ADMIN'),
         upload.single('lecture'),
-        addLectureToCourseById
-        )
+        addLectureToCourseById)
+
+    
 
 export default router;
