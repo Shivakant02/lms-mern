@@ -189,9 +189,31 @@ export const addLectureToCourseById = async (req, res, next) => {
             success: true,
             message: 'Lecture added successfully',
             course
-        });
+        }); 
         
     } catch (error) {
         return next(new AppError(error.message, 500));
     }
+}
+
+export const deleteLecture = async    (req, res, next) => {
+    try {
+        const { id } = req.params;
+
+    const course =await Course.lectures.findById(id);
+    
+    if (!course) {
+        return next(new AppError('id is incorrect or does not exists', 400));
+    }
+
+    await Course.lectures.findByIdAndDelete(id);
+
+    res.status(200).json({
+        success: true,
+        message:'lecture deleted successfully'
+    })
+    } catch (error) {
+        return next(new AppError(error.message, 500));
+    }
+
 }
