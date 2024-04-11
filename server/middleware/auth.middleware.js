@@ -1,5 +1,5 @@
 import AppError from "../utils/appError.js";
-import  jwt  from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
 const isLoggedIn = async (req, _res, next) => {
   // extracting token from the cookies
@@ -25,17 +25,31 @@ const isLoggedIn = async (req, _res, next) => {
   next();
 };
 
-const authorizedRoles =  (...roles) => (req, res, next) => {
+const authorizedRoles =
+  (...roles) =>
+  (req, res, next) => {
+    const currentRole = req.user.role;
+
+    if (!roles.includes(currentRole)) {
+      return next(
+        new AppError("You do not have permission to access this route", 403)
+      );
+    }
+
+    next();
+  };
+
+const authorizedSubscriber = async (req, res, next) => {
+  const subscriptionStatus = req.user.subscription.status;
   const currentRole = req.user.role;
 
-  if (!roles.includes(currentRole)) {
-    return next(new AppError('You do not have permission to access this route', 403));
+  if (currentRole !== "ADMIN" && subscriptionStatus !== "active") {
+    return next(
+      new AppError("Please subscribe to the course to access this route", 400)
+    );
   }
 
   next();
-}
+};
 
-export {
-  isLoggedIn,
-  authorizedRoles,
-}
+export { isLoggedIn, authorizedRoles, authorizedSubscriber };
