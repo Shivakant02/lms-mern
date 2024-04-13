@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 // import React from 'react'
 import { AiFillCloseCircle } from "react-icons/ai";
 import { FiMenu } from "react-icons/fi";
@@ -47,7 +48,7 @@ function HomeLayout({ children }) {
           >
             {" "}
           </label>
-          <ul className=" menu p-4 w-4 sm:w-80 bg-base-200 text-base-content relative ">
+          <ul className=" menu p-4 w-4 h-[100%] sm:w-80 bg-base-200 text-base-content relative ">
             <li className=" w-fit absolute right-2 z-50">
               <button>
                 <AiFillCloseCircle
@@ -81,23 +82,23 @@ function HomeLayout({ children }) {
             </li>
 
             {!isLoggedIn ? (
-              <li>
+              <li className="absolute bottom-4 w-[90%]">
                 <div className="w-full flex items-center justify-center">
-                  <button className="btn-outline btn-primary px-4 py-1 font-semibold rounded-md w-full">
-                    <Link to="/user/profile">Login</Link>
+                  <button className=" btn-outline btn-primary px-4 py-1 font-semibold rounded-md w-full">
+                    <Link to="/signin">Login</Link>
                   </button>
-                  <button className="btn-outline btn-secondary px-4 py-1 font-semibold rounded-md w-full">
-                    <Link onClick={onLogout}>Signup</Link>
+                  <button className=" btn-outline btn-secondary px-4 py-1 font-semibold rounded-md w-full">
+                    <Link to="/signup">Signup</Link>
                   </button>
                 </div>
               </li>
             ) : (
-              <li>
+              <li className="absolute bottom-4 w-[90%]">
                 <div className="w-full flex items-center justify-center">
-                  <button className="btn-outline btn-primary px-4 py-1 font-semibold rounded-md w-full">
+                  <button className="btn-primary px-4 py-1 font-semibold rounded-md w-full">
                     <Link to="/user/profile">Profile</Link>
                   </button>
-                  <button className="btn-outline btn-secondary px-4 py-1 font-semibold rounded-md w-full">
+                  <button className="btn-secondary px-4 py-1 font-semibold rounded-md w-full">
                     <Link onClick={onLogout}>Logout</Link>
                   </button>
                 </div>
