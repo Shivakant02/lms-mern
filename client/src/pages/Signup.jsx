@@ -181,7 +181,7 @@ function Signup() {
           </button>
           <p className=" text-center">
             Alread have an accout?
-            <Link to="/login" className=" cursor-pointer text-accent">
+            <Link to="/signin" className=" cursor-pointer text-accent">
               Login
             </Link>
           </p>

@@ -95,10 +95,10 @@ function HomeLayout({ children }) {
             ) : (
               <li className="absolute bottom-4 w-[90%]">
                 <div className="w-full flex items-center justify-center">
-                  <button className="btn-primary px-4 py-1 font-semibold rounded-md w-full">
+                  <button className=" btn-outline btn-primary px-4 py-1 font-semibold rounded-md w-full">
                     <Link to="/user/profile">Profile</Link>
                   </button>
-                  <button className="btn-secondary px-4 py-1 font-semibold rounded-md w-full">
+                  <button className=" btn-outline btn-secondary px-4 py-1 font-semibold rounded-md w-full">
                     <Link onClick={onLogout}>Logout</Link>
                   </button>
                 </div>
