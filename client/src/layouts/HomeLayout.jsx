@@ -12,7 +12,7 @@ function HomeLayout({ children }) {
   const navigate = useNavigate();
 
   const isLoggedIn = useSelector((state) => state?.auth?.isLoggedIn);
-  console.log(isLoggedIn);
+  // console.log(isLoggedIn);
   const role = useSelector((state) => state?.auth?.role);
 
   function chageWidth() {
@@ -48,7 +48,7 @@ function HomeLayout({ children }) {
           >
             {" "}
           </label>
-          <ul className=" menu p-4 w-4 h-[100%] sm:w-80 bg-base-200 text-base-content relative ">
+          <ul className=" menu p-4 w-4 h-[100%] sm:w-80 bg-base-200 text-base-content relative min-w-60  ">
             <li className=" w-fit absolute right-2 z-50">
               <button>
                 <AiFillCloseCircle
