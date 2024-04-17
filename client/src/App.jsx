@@ -13,7 +13,7 @@ function App() {
       <Route path="/about" element={<Aboutus />} />
       <Route path="*" element={<NotFound />} />
       <Route path="/signup" element={<Signup />} />
-      <Route path="/login" element={<Login />} />
+      <Route path="/signin" element={<Login />} />
     </Routes>
   );
 }
