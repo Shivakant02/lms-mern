@@ -22,20 +22,10 @@ app.use(morgan("dev"));
 
 app.use(cookieParser());
 
-app.use("/ping", (req, res) => {
-  res.send("pong");
-});
-
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/courses", courseRoutes);
 app.use("/api/v1/payments", paymentRoutes);
 
-app.use("/", (req, res) => {
-  res.status(201).json({
-    success: true,
-    message: "Hello Ji kaise ho?",
-  });
-});
 app.all("*", (req, res) => {
   res.status(404).send("OOPS! 404 page not found");
 });
