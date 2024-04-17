@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 
 import Aboutus from "./pages/Aboutus";
+import ContactUs from "./pages/ContactUs";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
@@ -14,6 +15,7 @@ function App() {
       <Route path="*" element={<NotFound />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/signin" element={<Login />} />
+      <Route path="/contact" element={<ContactUs />} />
     </Routes>
   );
 }
