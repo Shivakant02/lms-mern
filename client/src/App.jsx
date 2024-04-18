@@ -1,9 +1,11 @@
 import { Route, Routes } from "react-router-dom";
 
 import Aboutus from "./pages/Aboutus";
+import RequireAuth from "./pages/auth/RequireAuth";
 import ContactUs from "./pages/ContactUs";
 import CourseDescription from "./pages/Course/CourseDescription";
 import CourseList from "./pages/Course/CourseList";
+import CreateCourse from "./pages/Course/CreateCourse";
 import Denied from "./pages/Denied";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -22,6 +24,10 @@ function App() {
       <Route path="/denied" element={<Denied />} />
       <Route path="/courses" element={<CourseList />} />
       <Route path="/course/description" element={<CourseDescription />} />
+
+      <Route element={<RequireAuth allowedRoles={["ADMIN"]} />}>
+        <Route path="/course/create" element={<CreateCourse />} />
+      </Route>
     </Routes>
   );
 }
