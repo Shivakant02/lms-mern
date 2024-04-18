@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 
 import Aboutus from "./pages/Aboutus";
 import ContactUs from "./pages/ContactUs";
+import CourseDescription from "./pages/Course/CourseDescription";
 import CourseList from "./pages/Course/CourseList";
 import Denied from "./pages/Denied";
 import Home from "./pages/Home";
@@ -20,6 +21,7 @@ function App() {
       <Route path="/contact" element={<ContactUs />} />
       <Route path="/denied" element={<Denied />} />
       <Route path="/courses" element={<CourseList />} />
+      <Route path="/course/description" element={<CourseDescription />} />
     </Routes>
   );
 }
