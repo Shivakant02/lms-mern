@@ -18,7 +18,7 @@ export const getAllCourses = createAsyncThunk(
         },
         error: "Failed to load courses",
       });
-      return await response;
+      return (await response).data.courses;
     } catch (error) {
       //console.log(error);
       toast.error(error?.response?.data?.message);
@@ -30,6 +30,14 @@ const courseSlice = createSlice({
   name: "course",
   initialState,
   reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(getAllCourses.fulfilled, (state, action) => {
+      console.log(action.payload);
+      if (action?.payload) {
+        state.courseList = [...action.payload];
+      }
+    });
+  },
 });
 
 export default courseSlice.reducer;
