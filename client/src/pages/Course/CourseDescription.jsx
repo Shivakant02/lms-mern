@@ -42,14 +42,14 @@ function CourseDescription() {
                   onClick={() =>
                     navigate("/course/displaylectures", { state: { ...state } })
                   }
-                  className=" btn btn-outline btn-primary"
+                  className=" w-full btn btn-outline btn-primary"
                 >
                   Watch lectures
                 </button>
               ) : (
                 <button
                   onClick={() => navigate("/checkout")}
-                  className=" btn btn-outline btn-secondary"
+                  className=" w-full btn btn-outline btn-secondary"
                 >
                   Subscribe
                 </button>

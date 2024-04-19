@@ -32,7 +32,7 @@ export const createCourse = createAsyncThunk("/course/create", async (data) => {
     formData.append("title", data?.title);
     formData.append("description", data?.description);
     formData.append("category", data?.category);
-    formData.append("createdby", data?.createdBy);
+    formData.append("createdBy", data?.createdBy);
     formData.append("thumbnail", data?.thumbnail);
 
     const response = axiosInstance.post("/courses", formData);
