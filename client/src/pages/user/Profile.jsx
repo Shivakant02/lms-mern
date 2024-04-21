@@ -46,6 +46,7 @@ function Profile() {
               Edit Profile
             </Link>
           </div>
+          {/* todo : I have to debug the subscription route as well as cancel button */}
           {userData?.subscription?.status === "active" && (
             <button className=" w-full btn btn-primary">
               Cancel Subscription
