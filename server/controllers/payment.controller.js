@@ -38,7 +38,7 @@ export const buySubscription = async (req, res, next) => {
     user.subscription.id = subscription.id;
     user.subscription.status = subscription.status;
 
-    console.log(user);
+    // console.log(user);
 
     await user.save();
 
