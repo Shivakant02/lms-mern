@@ -18,7 +18,8 @@ function Aboutus() {
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias
               amet eos praesentium harum. Animi perspiciatis a amet tenetur
-              autem eum ipsam pariatur dolor, rem ut ipsum numquam ducimus
+              autem eum ipsam pariatur dolor, rem ut ipsum numquam ducimus fghg
+              fr
             </p>
           </section>
 
