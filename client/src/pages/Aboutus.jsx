@@ -40,7 +40,7 @@ function Aboutus() {
               />
               <p className=" text-xl text-gray-200">
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dicta,
-                joki fuga?
+                joki fuga
               </p>
               <h3 className=" text-2xl font-semibold">APJ Abdul Kalam</h3>
               <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
