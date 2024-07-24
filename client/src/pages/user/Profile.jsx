@@ -25,7 +25,8 @@ function Profile() {
             <p>{userData?.role}</p>
             <p>Subscription:</p>
             <p>
-              {userData?.subscription?.status === "active"
+              {userData?.subscription?.status === "active" ||
+              userData?.role === "ADMIN"
                 ? "active"
                 : "Inactive"}
             </p>
