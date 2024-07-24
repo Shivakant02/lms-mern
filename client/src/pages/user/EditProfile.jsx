@@ -113,12 +113,11 @@ function EditProfile() {
           >
             Update profile
           </button>
-          <Link
-            className=" link text-accent cursor-pointer flex items-center justify-center "
-            to="/user/profile"
-          >
+          <Link to="/user/profile">
             {" "}
-            <p>Go back to profile</p>
+            <p className=" link text-accent cursor-pointer flex items-center justify-center ">
+              Go back to profile
+            </p>
           </Link>
         </form>
       </div>
