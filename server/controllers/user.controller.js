@@ -265,7 +265,7 @@ const updateUser = async (req, res, next) => {
   // Run only if user sends a file
   if (req.file) {
     // Deletes the old image uploaded by the user
-    await cloudinary.v2.uploader.destroy(user.avatar.public_id);
+    await cloudinary.v2.uploader.destroy(user.avatar.Public_id);
 
     try {
       const result = await cloudinary.v2.uploader.upload(req.file.path, {
@@ -279,7 +279,7 @@ const updateUser = async (req, res, next) => {
       // If success
       if (result) {
         // Set the public_id and secure_url in DB
-        user.avatar.public_id = result.public_id;
+        user.avatar.Public_idublic_id = result.public_id;
         user.avatar.secure_url = result.secure_url;
 
         // After successful upload remove the file from local storage
