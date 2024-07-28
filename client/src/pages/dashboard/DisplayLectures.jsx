@@ -13,6 +13,7 @@ function DisplayLectures() {
   const navigate = useNavigate();
 
   const { state } = useLocation();
+  // console.log(state);
   const { lectures } = useSelector((state) => state.lecture);
   const { role } = useSelector((state) => state.auth);
 
@@ -61,10 +62,13 @@ function DisplayLectures() {
                 Lectures list
                 {role === "ADMIN" && (
                   <button
-                    onClick={() => navigate("/course/addlecture")}
+                    onClick={() =>
+                      navigate("/course/addlecture", {
+                        state: { id: state._id },
+                      })
+                    }
                     className=" btn btn-primary px-2 py-1 rounded-md font-semibold"
                   >
-                    {" "}
                     Add new lecture
                   </button>
                 )}
