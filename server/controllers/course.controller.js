@@ -193,7 +193,7 @@ export const addLectureToCourseById = async (req, res, next) => {
 
 export const deleteLecture = async (req, res, next) => {
   try {
-    const { courseId, lectureId } = req.query;
+    const { courseId, lectureId } = req.params;
 
     if (!courseId) {
       return next(
@@ -213,8 +213,8 @@ export const deleteLecture = async (req, res, next) => {
       return next(new AppError("Course does not exists", 400));
     }
 
-    const lectureIndex = course.lectures.findIndex((lecture) =>
-      lecture._id.toString()
+    const lectureIndex = course.lectures.findIndex(
+      (lecture) => lecture._id.toString() === lectureId.toString()
     );
 
     if (lectureIndex === -1) {
