@@ -20,11 +20,6 @@ function Checkout() {
     (state) => state?.razorpay?.subscription_id
   );
 
-  const isPaymentVerified = useSelector(
-    (state) => state?.razorpay?.isPaymentVerified
-  );
-  const userData = useSelector((state) => state?.auth?.data);
-
   const paymentDetails = {
     razorpay_payment_id: "",
     razorpay_subscription_id: "",
