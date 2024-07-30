@@ -22,7 +22,7 @@ export const getRazorPayId = createAsyncThunk("/razorpay/getId", async () => {
 });
 
 export const purchaseCourseBundle = createAsyncThunk(
-  "/purchasecourse",
+  "/purchaseCourse",
   async () => {
     try {
       const response = await axiosInstance.post("/payments/subscribe");
@@ -93,26 +93,25 @@ const razorPaySlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder
-      .addCase(getRazorPayId.fulfilled, (state, action) => {
-        state.key = action?.payload?.key;
-      })
-      .addCase(purchaseCourseBundle.fulfilled, (state, action) => {
-        state.subscription_id = action?.payload?.subscription_id;
-      })
-      .addCase(verifyUserPayment.fulfilled, (state, action) => {
-        toast.success(action?.payload?.message);
-        state.isPaymentVerified = action?.payload?.success;
-      })
-      .addCase(verifyUserPayment.rejected, (state, action) => {
-        toast.error(action?.payload?.message);
-        state.isPaymentVerified = action?.payload?.success;
-      })
-      .addCase(getPaymentRecords.fulfilled, (state, action) => {
-        state.allPayments = action?.payload?.allPayments;
-        state.finalMonths = action?.payload?.finalMonths;
-        state.monthlySalesRecords = action?.payload?.monthlySalesRecords;
-      });
+    builder.addCase(getRazorPayId.fulfilled, (state, action) => {
+      state.key = action?.payload?.key;
+    });
+    builder.addCase(purchaseCourseBundle.fulfilled, (state, action) => {
+      state.subscription_id = action?.payload?.subscription_id;
+    });
+    builder.addCase(verifyUserPayment.fulfilled, (state, action) => {
+      toast.success(action?.payload?.message);
+      state.isPaymentVerified = action?.payload?.success;
+    });
+    builder.addCase(verifyUserPayment.rejected, (state, action) => {
+      toast.error(action?.payload?.message);
+      state.isPaymentVerified = action?.payload?.success;
+    });
+    builder.addCase(getPaymentRecords.fulfilled, (state, action) => {
+      state.allPayments = action?.payload?.allPayments;
+      state.finalMonths = action?.payload?.finalMonths;
+      state.monthlySalesRecords = action?.payload?.monthlySalesRecords;
+    });
   },
 });
 

@@ -15,10 +15,11 @@ function Checkout() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const razorpayKey = useSelector((state) => state?.razorpay?.razorpayKey);
+  const razorpayKey = useSelector((state) => state?.razorpay?.key);
   const subscription_id = useSelector(
     (state) => state?.razorpay?.subscription_id
   );
+
   const isPaymentVerified = useSelector(
     (state) => state?.razorpay?.isPaymentVerified
   );
@@ -65,7 +66,7 @@ function Checkout() {
 
   async function load() {
     await dispatch(getRazorPayId());
-    await dispatch(purchaseCourseBundle);
+    await dispatch(purchaseCourseBundle());
   }
 
   useEffect(() => {
