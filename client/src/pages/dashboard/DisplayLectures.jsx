@@ -34,6 +34,18 @@ function DisplayLectures() {
         <div className=" text-center text-2xl font-semibold text-yellow-500">
           Course Name: {state?.title}
         </div>
+        {lectures && lectures.length == 0 && (
+          <button
+            onClick={() =>
+              navigate("/course/addlecture", {
+                state: { id: state._id },
+              })
+            }
+            className=" btn btn-accent w-1/3 "
+          >
+            Add Lecture
+          </button>
+        )}
         {lectures && lectures.length > 0 && (
           <div className=" flex justify-center gap-10 w-full ">
             <div className=" space-y-5 w-[28rem] p-2 rounded-lg shadow-[0_0_10px_black]">
