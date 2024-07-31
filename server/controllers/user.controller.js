@@ -7,7 +7,7 @@ import sendEmail from "../utils/sendEmail.js";
 import crypto from "crypto";
 
 const cookieOptions = {
-  secure: true,
+  secure: process.env.NODE_ENV === "production" ? true : false,
   maxAge: 7 * 24 * 60 * 60 * 1000,
   httpOnly: true,
 };
