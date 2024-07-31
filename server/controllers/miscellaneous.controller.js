@@ -1,9 +1,8 @@
 import User from "../models/user.model.js";
 import AppError from "../utils/appError.js";
 import sendEmail from "../utils/sendEmail.js";
-import asyncHandler from "../middleware/asyncHandler.middleware.js";
 
-export const contactUs = asyncHandler(async (req, res, next) => {
+export const contactUs = async (req, res, next) => {
   const { fullName, email, message } = req.body;
   console.log({ fullName, email, message });
   if (!fullName || !email || !message) {
@@ -25,13 +24,8 @@ export const contactUs = asyncHandler(async (req, res, next) => {
     success: true,
     message: "Your request has been submitted successfully",
   });
-});
+};
 
-/**
- * @USER_STATS_ADMIN
- * @ROUTE @GET {{URL}}/api/v1/admin/stats/users
- * @ACCESS Private(ADMIN ONLY)
- */
 export const userStats = async (req, res, next) => {
   const allUsersCount = await User.countDocuments();
 

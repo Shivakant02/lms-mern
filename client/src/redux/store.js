@@ -4,6 +4,7 @@ import authReducer from "./slices/authSlice";
 import courseReducer from "./slices/courseSlice";
 import lectureReducer from "./slices/lectureSlice";
 import razorpayReducer from "./slices/razorPaySlice";
+import statSliceReducer from "./slices/statSlice";
 
 const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ const store = configureStore({
     course: courseReducer,
     razorpay: razorpayReducer,
     lecture: lectureReducer,
+    stat: statSliceReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }),
