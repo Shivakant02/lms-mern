@@ -52,7 +52,7 @@ const register = async (req, res, next) => {
         user.avatar.Public_id = result.public_id;
         user.avatar.secure_url = result.secure_url;
 
-        fs.rm(`../uploads/${req.file.filename}`);
+        fs.rm(`uploads/${req.file.filename}`);
       }
     } catch (error) {
       return next(
@@ -283,7 +283,7 @@ const updateUser = async (req, res, next) => {
         user.avatar.secure_url = result.secure_url;
 
         // After successful upload remove the file from local storage
-        fs.rm(`../uploads/${req.file.filename}`);
+        fs.rm(`uploads/${req.file.filename}`);
       }
     } catch (error) {
       return next(
