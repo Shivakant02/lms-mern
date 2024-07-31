@@ -47,7 +47,7 @@ export const updateProfile = createAsyncThunk(
 
 export const getUserData = createAsyncThunk("/auth/get-data", async () => {
   try {
-    const response = axiosInstance.put(`user/me`);
+    const response = axiosInstance.get(`user/me`);
     return (await response).data;
   } catch (error) {
     //console.log(error);
@@ -68,7 +68,6 @@ export const login = createAsyncThunk("/auth/signin", async (data) => {
     });
     return await response;
   } catch (error) {
-    console.log(error);
     toast.error(error?.response?.data?.message);
   }
 });
@@ -76,7 +75,7 @@ export const login = createAsyncThunk("/auth/signin", async (data) => {
 export const logout = createAsyncThunk("/auth/logout", async () => {
   try {
     const response = axiosInstance.get("user/logout");
-    console.log(response);
+
     toast.promise(response, {
       loading: "Wait! logging out  your account",
       success: (data) => {
@@ -86,7 +85,6 @@ export const logout = createAsyncThunk("/auth/logout", async () => {
     });
     return await response;
   } catch (error) {
-    console.log(error);
     toast.error(error?.response?.data?.message);
   }
 });
@@ -115,15 +113,16 @@ const authSlice = createSlice({
         state.data = {};
       })
       .addCase(getUserData.fulfilled, (state, action) => {
-        if (!action?.payload?.data) return;
+        // console.log(action.payload);
+        if (!action?.payload?.user) return;
 
-        localStorage.setItem("data", JSON.stringify(action?.payload?.user));
+        localStorage.setItem("data", JSON.stringify(action?.payload));
         localStorage.setItem("isLoggedIn", true);
         localStorage.setItem("role", action?.payload?.user?.role);
 
         state.isLoggedIn = true;
         state.role = action?.payload?.user?.role;
-        state.data = action?.payload?.user;
+        state.data = action?.payload;
       });
   },
 });

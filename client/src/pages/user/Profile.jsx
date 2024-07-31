@@ -11,13 +11,13 @@ function Profile() {
   const navigate = useNavigate();
   const userData = useSelector((state) => state?.auth?.data?.user);
 
-  async function handleCancelation() {
-    toast("Initiating cancellation");
-    await dispatch(cancelCourseBundle());
-    await dispatch(getUserData());
-    toast.success("Cancellation complete");
-    navigate("/");
-  }
+  // async function handleCancelation() {
+  //   toast("Initiating cancellation");
+  //   await dispatch(cancelCourseBundle());
+  //   await dispatch(getUserData());
+  //   toast.success("Cancellation complete");
+  //   navigate("/");
+  // }
 
   return (
     <HomeLayout>
