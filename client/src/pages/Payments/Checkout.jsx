@@ -50,7 +50,7 @@ function Checkout() {
         toast.success("payment successful");
 
         const res = await dispatch(verifyUserPayment(paymentDetails));
-        res?.paylaod?.success
+        res?.payload?.success == true
           ? navigate("/checkout/success")
           : navigate("/checkout/fail");
       },

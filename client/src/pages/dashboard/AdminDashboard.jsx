@@ -10,7 +10,7 @@ import {
 } from "chart.js";
 import { useEffect } from "react";
 import { Bar, Pie } from "react-chartjs-2";
-import { BsCloudFogFill, BsCollectionPlayFill, BsTrash } from "react-icons/bs";
+import { BsCollectionPlayFill, BsTrash } from "react-icons/bs";
 import { FaUsers } from "react-icons/fa";
 import { FcSalesPerformance } from "react-icons/fc";
 import { GiMoneyStack } from "react-icons/gi";
@@ -101,7 +101,7 @@ function AdminDashboard() {
     (async () => {
       await dispatch(getAllCourses());
       await dispatch(getStatsData());
-      //   await dispatch(getPaymentRecords());
+      await dispatch(getPaymentRecords());
     })();
   }, []);
 

@@ -37,7 +37,8 @@ function CourseDescription() {
                 </p>
               </div>
 
-              {role === "ADMIN" || data?.subscription?.status === "active" ? (
+              {role === "ADMIN" ||
+              data?.user?.subscription?.status === "active" ? (
                 <button
                   onClick={() =>
                     navigate("/course/displaylectures", { state: { ...state } })
