@@ -8,7 +8,7 @@ const initialState = {
   isPaymentVerified: false,
   allPayments: {},
   finalMonths: {},
-  monthlySalesRecords: [],
+  monthlySalesRecord: [],
 };
 
 export const getRazorPayId = createAsyncThunk("/razorpay/getId", async () => {
@@ -40,7 +40,7 @@ export const verifyUserPayment = createAsyncThunk(
     try {
       const response = await axiosInstance.post("payments/verify", {
         razorpay_payment_id: data.razorpay_payment_id,
-        razorpay_subscription_id: data.rarazorpay_subscription_id,
+        razorpay_subscription_id: data.razorpay_subscription_id,
         razorpay_signature: data.razorpay_signature,
       });
       return response.data;
@@ -55,14 +55,13 @@ export const getPaymentRecords = createAsyncThunk(
   async () => {
     try {
       const response = await axiosInstance.get("payments?count=100");
-      toast.promise(response, {
-        loading: "getting the payment records",
-        success: (data) => {
-          return data?.data?.message;
-        },
-        error: "failed to get the payment records",
-      });
-      return (await response).data;
+      // toast.promise(response, {
+      //   loading: "getting the payment records",
+      //   success: "all payments",
+      //   error: "failed to get the payment records",
+      // });
+      // console.log(response.data);
+      return response.data;
     } catch (error) {
       toast.error("Operation failed");
     }
@@ -73,11 +72,11 @@ export const cancelCourseBundle = createAsyncThunk(
   "/payments/unsubscribe ",
   async () => {
     try {
-      const response = await axiosInstance.get("payments?count=100");
+      const response = await axiosInstance.post("payments/unsubscribe");
       toast.promise(response, {
         loading: "unsubscribing the bundle",
         success: (data) => {
-          return data?.data?.message;
+          return data?.payload?.message;
         },
         error: "failed to unsubscribe",
       });
@@ -110,7 +109,7 @@ const razorPaySlice = createSlice({
     builder.addCase(getPaymentRecords.fulfilled, (state, action) => {
       state.allPayments = action?.payload?.allPayments;
       state.finalMonths = action?.payload?.finalMonths;
-      state.monthlySalesRecords = action?.payload?.monthlySalesRecords;
+      state.monthlySalesRecord = action?.payload?.monthlySalesRecord;
     });
   },
 });
