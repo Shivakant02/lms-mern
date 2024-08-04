@@ -10,6 +10,8 @@ function Profile() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userData = useSelector((state) => state?.auth?.data?.user);
+  // console.log(userData);
+  // console.log(userData);
 
   // async function handleCancelation() {
   //   toast("Initiating cancellation");
