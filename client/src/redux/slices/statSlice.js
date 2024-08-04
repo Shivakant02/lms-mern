@@ -32,7 +32,7 @@ const statSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getStatsData.fulfilled, (state, action) => {
       state.allUsersCount = action?.payload?.allUsersCount;
-      state.subscribedCount = action?.payload?.subscribedCount;
+      state.subscribedUsersCount = action?.payload?.subscribedUsersCount;
     });
   },
 });
