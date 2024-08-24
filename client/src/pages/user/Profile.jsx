@@ -48,7 +48,7 @@ function Profile() {
 
           <div className=" flex items-center justify-between gap-2 ">
             <Link
-              to="/change-password"
+              to="/user/change-password"
               className=" btn btn-outline btn-primary  w-1/2 font-semibold "
             >
               Change password
