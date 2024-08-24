@@ -217,19 +217,17 @@ const resetPassword = async (req, res, next) => {
 const changePassword = async (req, res, next) => {
   const { oldPassword, newPassword } = req.body;
 
-  const { id } = req.user;
-
   if (!oldPassword || !newPassword) {
     return next(new AppError("all fields are mandatory ", 400));
   }
 
-  const user = await User.findById({ id }).select("+password");
+  const user = await User.findById(req.user.id).select("+password");
 
   if (!user) {
     return next(new AppError("User does not exist", 400));
   }
 
-  const isPasswordValid = await user.comparePassword(password);
+  const isPasswordValid = await user.comparePassword(oldPassword);
 
   if (!isPasswordValid) {
     return next(new AppError("Invalid old password", 400));
