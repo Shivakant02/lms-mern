@@ -9,7 +9,7 @@ function Denied() {
         Access denied
       </div>
       <button
-        onClick={() => navigate(-1)}
+        onClick={() => navigate("/")}
         className=" mt-5 underline text-orange-400 hover:text-orange-600 transition-all ease-in-out duration-300"
       >
         Go back

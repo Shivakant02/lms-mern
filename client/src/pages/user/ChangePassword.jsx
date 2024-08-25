@@ -1,10 +1,14 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 
 import axiosInstance from "../../config/axiosInstance";
 import HomeLayout from "../../layouts/HomeLayout";
+import { logout } from "../../redux/slices/authSlice";
 function ChangePassword() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [userInput, setUserInput] = useState({
     oldPassword: "",
     newPassword: "",
@@ -35,13 +39,11 @@ function ChangePassword() {
       });
 
       const responseData = await response;
-      //   console.log(responseData);
+      // console.log(responseData);
 
-      if (responseData?.payload?.data) {
-        setUserInput({
-          oldPassword: "",
-          newPassword: "",
-        });
+      if (responseData?.data) {
+        await dispatch(logout());
+        navigate("/signin");
       }
     } catch (error) {
       toast.error("Operation failed....");
